@@ -15,14 +15,19 @@ Jeweler::Tasks.new do |gem|
   gem.name = "mongoid_nested_fields"
   gem.homepage = "http://github.com/retro/mongoid_nested_fields"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{MongoidNestedFields allows you to handle complex data structures inside one field in MongoDB.}
+  gem.description = %Q{MongoidNestedFields allows you to handle complex data structures inside one field in MongoDB. It also validates whole object graph on field validation}
   gem.email = "konjevic@gmail.com"
   gem.authors = ["retro"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  # gem 'mongoid', "2.0.0.beta.20"
+  gem.add_runtime_dependency "bson_ext",      ">= 1.1.5"
+  gem.add_runtime_dependency 'yajl-ruby',     ">= 0.7.8"
+  gem.add_runtime_dependency 'activesupport', ">= 3.0.3"
+  gem.add_runtime_dependency 'activemodel',   ">= 3.0.3"
 end
 Jeweler::RubygemsDotOrgTasks.new
 

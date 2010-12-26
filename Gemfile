@@ -5,9 +5,9 @@ source "http://rubygems.org"
 
 gem 'mongoid', "2.0.0.beta.20"
 gem "bson_ext", "1.1.5"
-gem 'yajl-ruby'
-gem 'activesupport'
-gem 'activemodel'
+gem 'yajl-ruby', ">= 0.7.8"
+gem 'activesupport', ">= 3.0.3"
+gem 'activemodel', ">= 3.0.3"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

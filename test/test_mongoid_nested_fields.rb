@@ -201,7 +201,7 @@ class TestMongoidNestedFields < Test::Unit::TestCase
         assert_equal field_options, {
                                       :title => {:custom_option => 'custom'},
                                       :paragraph => {},
-                                      :test_hash => {:nested => true}
+                                      :test_hash => {:nested => true, :allowed_types => [Hash]}
                                     }
       end
       

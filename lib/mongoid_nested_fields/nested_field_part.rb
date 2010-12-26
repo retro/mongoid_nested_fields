@@ -11,7 +11,7 @@ module MongoidNestedFields
         
         set_validations
         set_field_options(name, options)
-        set_allowed_types_in_field(name, options.delete(:allowed_types))
+        set_allowed_types_in_field(name, options[:allowed_types])
         
         define_method("#{name}=") do |value|
           raise TypeError unless [String, Array].include?(value.class)

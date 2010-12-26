@@ -1,0 +1,55 @@
+= mongoid_nested_fields
+
+MongoidNestedFields is a gem aimed at CMS projects that need handling of complex types in one field. Nested fields can be nested into each other. Validations are performed on whole tree.
+
+== Example
+
+  class Article
+    include Mongoid::Document
+  
+    field :title
+    nested_field :body, :allowed_types => [ParagraphWithSubtitle, ImageWithCaption, ImageGallery]
+  
+  end
+
+  class ParagraphWithSubtitle
+    include MongoidNestedFields::NestedField
+  
+    field :paragraph
+    field :subtitle
+  
+    validates_presence_of :paragraph
+  end
+
+  class ImageWithCaption
+    include MongoidNestedFields::NestedField
+  
+    field :image
+    field :caption
+  
+  end
+
+  class ImageGallery
+    include MongoidNestedFields::NestedField
+  
+    field :gallery_name
+    nested_field :gallery, :allowed_types => [ImageWithCaption]
+  
+  end
+
+
+== Contributing to mongoid_nested_fields
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== Copyright
+
+Copyright (c) 2010 Mihael Konjevic - retro. See LICENSE.txt for
+further details.
+

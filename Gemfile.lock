@@ -1,0 +1,51 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    ZenTest (4.4.2)
+    activemodel (3.0.3)
+      activesupport (= 3.0.3)
+      builder (~> 2.1.2)
+      i18n (~> 0.4)
+    activesupport (3.0.3)
+    autotest (4.4.6)
+      ZenTest (>= 4.4.1)
+    autotest-growl (0.2.4)
+      autotest (>= 4.2.4)
+    bson (1.1.5)
+    bson_ext (1.1.5)
+    builder (2.1.2)
+    git (1.2.5)
+    i18n (0.5.0)
+    jeweler (1.5.2)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
+    mongo (1.1.5)
+      bson (>= 1.1.5)
+    mongoid (2.0.0.beta.20)
+      activemodel (~> 3.0)
+      mongo (~> 1.1)
+      tzinfo (~> 0.3.22)
+      will_paginate (~> 3.0.pre)
+    rake (0.8.7)
+    rcov (0.9.9)
+    shoulda (2.11.3)
+    tzinfo (0.3.23)
+    will_paginate (3.0.pre2)
+    yajl-ruby (0.7.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activemodel
+  activesupport
+  autotest
+  autotest-growl
+  bson_ext (= 1.1.5)
+  bundler (~> 1.0.0)
+  jeweler (~> 1.5.2)
+  mongoid (= 2.0.0.beta.20)
+  rcov
+  shoulda
+  yajl-ruby

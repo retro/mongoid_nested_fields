@@ -38,8 +38,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel
-  activesupport
+  activemodel (>= 3.0.3)
+  activesupport (>= 3.0.3)
   autotest
   autotest-growl
   bson_ext (= 1.1.5)
@@ -48,4 +48,4 @@ DEPENDENCIES
   mongoid (= 2.0.0.beta.20)
   rcov
   shoulda
-  yajl-ruby
+  yajl-ruby (>= 0.7.8)

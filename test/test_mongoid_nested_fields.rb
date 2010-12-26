@@ -78,7 +78,7 @@ class TestMongoidNestedFields < Test::Unit::TestCase
         ]
         c.save
         
-        assert_equal c.image_with_caption.first, {'_type' => 'image_with_caption', 'image' => 'IMAGE', 'caption' => 'CAPTION'}
+        assert_equal c.image_with_caption.first.class, ::ImageWithCaption
       end
       should "allow of nesting content fields and content field parts" do
         class ::Image
@@ -107,13 +107,13 @@ class TestMongoidNestedFields < Test::Unit::TestCase
           ]
         }]
         
-        assert_equal c.gallery, [{
+        assert_equal c.gallery.first.to_mongo, {
                                   '_type' => 'image_gallery',
                                   'gallery_name' => 'Test',
                                   'gallery' => [
                                     {'_type' => 'image', 'image' => 'IMG'}
                                   ]
-                                }]
+                                }
         
       end
       
@@ -186,8 +186,44 @@ class TestMongoidNestedFields < Test::Unit::TestCase
         
         document = ContentItem.first
         
-        assert_equal document.paragraph_with_title.first.origin.class, ::ParagraphWithTitle
+        assert_equal document.paragraph_with_title.first.class, ::ParagraphWithTitle
         
+      end
+      
+      should "return options for field definitions" do
+        class ::ParagraphWithTitle
+          include MongoidNestedFields::NestedField
+          field :title, :custom_option => 'custom'
+          field :paragraph
+          nested_field :test_hash, :allowed_types => [Hash]
+        end
+        field_options = ::ParagraphWithTitle.field_options
+        assert_equal field_options, {
+                                      :title => {:custom_option => 'custom'},
+                                      :paragraph => {},
+                                      :test_hash => {:nested => true}
+                                    }
+      end
+      
+      should "allow access through []" do
+        class ::ParagraphWithTitle
+          include MongoidNestedFields::NestedField
+          field :title, :custom_option => 'custom'
+          field :paragraph
+        end
+        
+        p = ParagraphWithTitle.new(:title => 'test')
+        assert_equal p['title'], 'test'
+      end
+      
+      should_raise do
+        class ::ParagraphWithTitle
+          include MongoidNestedFields::NestedField
+          field :title, :custom_option => 'custom'
+          field :paragraph
+        end
+        p = ParagraphWithTitle.new
+        p['non_existing_attr']
       end
       
     end

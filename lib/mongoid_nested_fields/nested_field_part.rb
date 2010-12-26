@@ -5,10 +5,14 @@ module MongoidNestedFields
     module ClassMethods
       
       def nested_field(name, options = {})
+        options.merge!({:nested => true})
+        
         add_nested_field(name)
+        
         set_validations
-        options[:type] = Array
+        set_field_options(name, options)
         set_allowed_types_in_field(name, options.delete(:allowed_types))
+        
         define_method("#{name}=") do |value|
           raise TypeError unless [String, Array].include?(value.class)
           if value.is_a? String
@@ -30,10 +34,32 @@ module MongoidNestedFields
         
         define_method(name) do
           read_attribute(name).map{ |v| v.respond_to?(:to_mongo) ? v.to_mongo : v }
-          
+          read_attribute(name)
+        end
+
+      end
+      
+      def field(name, options = {})
+        add_field(name)
+        set_field_options(name, options)
+        define_method("#{name}=") do |value|
+          klass = options[:type].nil? ? String : options.delete(:type).classify.constantize
+          write_attribute(name, klass.new(value))
         end
         
+        define_method(name) do
+          read_attribute(name)
+        end
         
+      end
+      
+      def set_field_options(field, options)
+        @_field_options ||= {}
+        @_field_options[field] = options
+      end
+      
+      def field_options
+        @_field_options || {}
       end
       
       def set_validations
@@ -45,31 +71,22 @@ module MongoidNestedFields
         @_allowed_types_in_field ||= {}
         @_allowed_types_in_field[field] ||= []
         @_allowed_types_in_field[field] << type
-        @_allowed_types_in_field[field].flatten!.uniq!
+        @_allowed_types_in_field[field].flatten!
+        @_allowed_types_in_field[field].uniq! unless @_allowed_types_in_field[field].nil?
       end
+      
       def allowed_types_in_field(field)
         field = field.to_sym
         @_allowed_types_in_field ||= {}
         return @_allowed_types_in_field[field] || []
       end
+      
       def is_allowed_type?(field, type)
         field = field.to_sym
         allowed_types_in_field(field).include?(type)
       end
       
-      def field(name, options = {})
-        add_field(name)
-        
-        define_method("#{name}=") do |value|
-          klass = options[:type].nil? ? String : options.delete(:type).classify.constantize
-          write_attribute(name, klass.new(value))
-        end
-        
-        define_method(name) do
-          read_attribute(name)
-        end
-        
-      end
+      
       
       def add_field(name)
         @_fields ||= []
@@ -83,8 +100,6 @@ module MongoidNestedFields
       end
       
     end
-    
-    
     
     def self.included(base)
       base.extend(ClassMethods)
@@ -112,9 +127,16 @@ module MongoidNestedFields
       @_attributes[name.to_sym] = value
     end
     
+    
     def read_attribute(name)
       @_attributes ||= {}
-      @_attributes[name.to_sym].respond_to?(:to_mongo) ? @_attributes[name.to_sym].to_mongo : @_attributes[name.to_sym]
+      fields = self.class.instance_variable_get(:@_fields)
+      raise "Field #{name} doesn't exist in #{self.class}" if fields.nil? or !fields.include?(name.to_sym)
+      @_attributes[name.to_sym]
+    end
+    
+    def [](key)
+      read_attribute(key)
     end
     
     def attributes
@@ -124,7 +146,11 @@ module MongoidNestedFields
     def to_mongo
       attrs = MongoidNestedFields::NestedFieldHash.new
       attributes.each_key do |key|
-        attrs[key.to_s] = self.send(key.to_sym)
+        if self.send(key.to_sym).is_a?(Array)
+          attrs[key.to_s] = self.send(key.to_sym).map{ |v| v.respond_to?(:to_mongo) ? v.to_mongo : v }
+        else
+          attrs[key.to_s] = self.send(key.to_sym)
+        end
       end
       attrs['_type'] = _type
       attrs.origin   = self

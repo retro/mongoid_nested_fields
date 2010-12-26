@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/mongoid_nested_fields/nested_field_holder.rb",
     "lib/mongoid_nested_fields/nested_field_part.rb",
     "lib/mongoid_nested_fields/nested_field_setter.rb",
+    "mongoid_nested_fields.gemspec",
     "test/helper.rb",
     "test/test_mongoid_nested_fields.rb"
   ]
@@ -52,52 +53,40 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<mongoid>, ["= 2.0.0.beta.20"])
       s.add_runtime_dependency(%q<bson_ext>, ["= 1.1.5"])
-      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 0"])
-      s.add_runtime_dependency(%q<activemodel>, [">= 0"])
+      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0.7.8"])
+      s.add_runtime_dependency(%q<activesupport>, [">= 3.0.3"])
+      s.add_runtime_dependency(%q<activemodel>, [">= 3.0.3"])
       s.add_development_dependency(%q<autotest>, [">= 0"])
       s.add_development_dependency(%q<autotest-growl>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_runtime_dependency(%q<bson_ext>, [">= 1.1.5"])
-      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0.7.8"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 3.0.3"])
-      s.add_runtime_dependency(%q<activemodel>, [">= 3.0.3"])
     else
       s.add_dependency(%q<mongoid>, ["= 2.0.0.beta.20"])
       s.add_dependency(%q<bson_ext>, ["= 1.1.5"])
-      s.add_dependency(%q<yajl-ruby>, [">= 0"])
-      s.add_dependency(%q<activesupport>, [">= 0"])
-      s.add_dependency(%q<activemodel>, [">= 0"])
+      s.add_dependency(%q<yajl-ruby>, [">= 0.7.8"])
+      s.add_dependency(%q<activesupport>, [">= 3.0.3"])
+      s.add_dependency(%q<activemodel>, [">= 3.0.3"])
       s.add_dependency(%q<autotest>, [">= 0"])
       s.add_dependency(%q<autotest-growl>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
       s.add_dependency(%q<rcov>, [">= 0"])
-      s.add_dependency(%q<bson_ext>, [">= 1.1.5"])
-      s.add_dependency(%q<yajl-ruby>, [">= 0.7.8"])
-      s.add_dependency(%q<activesupport>, [">= 3.0.3"])
-      s.add_dependency(%q<activemodel>, [">= 3.0.3"])
     end
   else
     s.add_dependency(%q<mongoid>, ["= 2.0.0.beta.20"])
     s.add_dependency(%q<bson_ext>, ["= 1.1.5"])
-    s.add_dependency(%q<yajl-ruby>, [">= 0"])
-    s.add_dependency(%q<activesupport>, [">= 0"])
-    s.add_dependency(%q<activemodel>, [">= 0"])
+    s.add_dependency(%q<yajl-ruby>, [">= 0.7.8"])
+    s.add_dependency(%q<activesupport>, [">= 3.0.3"])
+    s.add_dependency(%q<activemodel>, [">= 3.0.3"])
     s.add_dependency(%q<autotest>, [">= 0"])
     s.add_dependency(%q<autotest-growl>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.2"])
     s.add_dependency(%q<rcov>, [">= 0"])
-    s.add_dependency(%q<bson_ext>, [">= 1.1.5"])
-    s.add_dependency(%q<yajl-ruby>, [">= 0.7.8"])
-    s.add_dependency(%q<activesupport>, [">= 3.0.3"])
-    s.add_dependency(%q<activemodel>, [">= 3.0.3"])
   end
 end
 
